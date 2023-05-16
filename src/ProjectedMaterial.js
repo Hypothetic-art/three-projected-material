@@ -221,7 +221,8 @@ export default class ProjectedMaterial extends THREE.MeshBasicMaterial {
           bool isFacingProjector = dotProduct > 0.0000001;
 
 
-          vec4 diffuseColor = vec4(diffuse, opacity * backgroundOpacity);
+          vec4 diffuseColor = vec4(diffuse, 0.0);
+          // vec4 diffuseColor = vec4(diffuse, opacity * backgroundOpacity); // original
 
           if (isFacingProjector && isInTexture && isTextureLoaded && isTextureProjected) {
             vec4 textureColor = texture2D(projectedTexture, uv);
@@ -230,7 +231,8 @@ export default class ProjectedMaterial extends THREE.MeshBasicMaterial {
             textureColor.a *= opacity;
 
             // https://learnopengl.com/Advanced-OpenGL/Blending
-            diffuseColor = textureColor * textureColor.a + diffuseColor * (1.0 - textureColor.a);
+            diffuseColor = textureColor;
+            // diffuseColor = textureColor * textureColor.a + diffuseColor * (1.0 - textureColor.a); // original
           }
         `,
       })
